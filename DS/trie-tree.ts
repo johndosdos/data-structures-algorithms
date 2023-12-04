@@ -19,7 +19,6 @@ export default class Trie {
     #trieDFS(
         currentNode: trieNode,
         collectedWords: string[] = [],
-        inputWord: string = "",
         currentWord: string = ""
     ): string[] {
         if (currentNode.isEnd) {
@@ -27,10 +26,9 @@ export default class Trie {
         }
 
         for (const [char, nextNode] of currentNode.Child.entries()) {
-            currentWord = inputWord + char;
-            if (currentWord.startsWith(inputWord)) {
-                this.#trieDFS(nextNode, collectedWords, inputWord, currentWord);
-            }
+            const nextWord = currentWord + char;
+
+            this.#trieDFS(nextNode, collectedWords, nextWord);
         }
 
         return collectedWords;
@@ -57,12 +55,16 @@ export default class Trie {
     public Find(input: string): string[] {
         let currentNode = this.#root;
 
+        if (input === "") throw new Error("Cannot find item");
+
         for (const char of input) {
             if (currentNode.Child.has(char)) {
                 const nextNode = currentNode.Child.get(char);
                 if (nextNode) currentNode = nextNode;
             }
         }
+
+        if (currentNode.isEnd) return [input];
 
         return this.#trieDFS(currentNode, [], input);
     }

@@ -10,8 +10,8 @@ describe("Trie module", () => {
 
         // trie.Insert("bar");
 
-        expect(trie.Find("fo").sort()).toEqual(["foo", "fool", "foolish"]);
-        // expect(trie.Find("foo").sort()).toEqual(["foo"]);
+        expect(trie.Find("").sort()).toEqual(["foo", "fool", "foolish"]);
+        // expect(trie.Find("fool").sort()).toEqual(["fool"]);
 
         // trie.Delete("fool");
 
