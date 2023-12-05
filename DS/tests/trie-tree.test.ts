@@ -7,14 +7,24 @@ describe("Trie module", () => {
         trie.Insert("foo");
         trie.Insert("fool");
         trie.Insert("foolish");
+        trie.Insert("food");
+        trie.Insert("zebra");
 
-        // trie.Insert("bar");
+        expect(trie.Find("f").sort()).toEqual([
+            "foo",
+            "food",
+            "fool",
+            "foolish",
+        ]);
+        expect(trie.Find("z")).toEqual(["zebra"]);
 
-        expect(trie.Find("").sort()).toEqual(["foo", "fool", "foolish"]);
-        // expect(trie.Find("fool").sort()).toEqual(["fool"]);
+        expect(trie.Find("fool").sort()).toEqual(["fool"]);
 
-        // trie.Delete("fool");
+        trie.Insert("bar");
+        expect(trie.Find("b")).toEqual(["bar"]);
 
-        // expect(trie.Find("fo").sort()).toEqual(["foo", "foolish"]);
+        trie.Delete("fool");
+
+        expect(trie.Find("fo").sort()).toEqual(["foo", "food", "foolish"]);
     });
 });

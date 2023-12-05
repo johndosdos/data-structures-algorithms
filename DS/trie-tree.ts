@@ -37,7 +37,7 @@ export default class Trie {
     public Insert(word: string) {
         let currentNode = this.#root;
 
-        if (word === "") throw new Error("Cannot insert an empty word");
+        if (word === "") return "Empty string not allowed for insertion";
 
         for (const char of word) {
             if (!currentNode.Child.has(char)) {
@@ -50,22 +50,36 @@ export default class Trie {
 
         currentNode.isEnd = true;
     }
-    public Delete(word: string) {}
-
-    public Find(input: string): string[] {
+    public Delete(word: string) {
         let currentNode = this.#root;
 
-        if (input === "") throw new Error("Cannot find item");
+        if (word === "") return "Empty string not allowed for deletion";
 
-        for (const char of input) {
+        for (const char of word) {
             if (currentNode.Child.has(char)) {
                 const nextNode = currentNode.Child.get(char);
                 if (nextNode) currentNode = nextNode;
             }
         }
 
-        if (currentNode.isEnd) return [input];
+        currentNode.isEnd = false;
+    }
 
-        return this.#trieDFS(currentNode, [], input);
+    public Find(word: string): string[] {
+        let currentNode = this.#root;
+
+        if (word === "")
+            throw new Error("Empty string now allowed for searching");
+
+        for (const char of word) {
+            if (currentNode.Child.has(char)) {
+                const nextNode = currentNode.Child.get(char);
+                if (nextNode) currentNode = nextNode;
+            }
+        }
+
+        if (currentNode.isEnd) return [word];
+
+        return this.#trieDFS(currentNode, [], word);
     }
 }
