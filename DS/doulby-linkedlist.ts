@@ -103,6 +103,7 @@ const DoublyLinkedList = function <T>() {
 
             return node?.value;
         }
+
         return undefined;
     };
 
@@ -155,4 +156,4 @@ const DoublyLinkedList = function <T>() {
     };
 };
 
-module.exports = DoublyLinkedList;
+export { DoublyLinkedList };
