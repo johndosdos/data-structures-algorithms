@@ -14,13 +14,11 @@ const CreateMatrix = function (matrixSize: number) {
         if (weight < 0) throw new Error("Weight must be greater than zero.");
 
         const newMatrix = matrix.map((row, rowIndex) => {
-            return row.map((value, columnIndex) => {
-                if (rowIndex === source && columnIndex === destination) {
-                    return weight;
-                } else {
-                    return value;
-                }
-            });
+            return row.map((value, columnIndex) =>
+                rowIndex === source && columnIndex === destination
+                    ? weight
+                    : value
+            );
         });
 
         return newMatrix;
