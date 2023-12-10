@@ -11,6 +11,8 @@ const CreateMatrix = function (matrixSize: number) {
         destination: number,
         weight: number
     ): number[][] {
+        if (weight < 0) throw new Error("Weight must be greater than zero.");
+
         const newMatrix = matrix.map((row, rowIndex) => {
             return row.map((value, columnIndex) => {
                 if (rowIndex === source && columnIndex === destination) {
@@ -47,15 +49,17 @@ const MatrixBFS = function (matrix: number[][]): {
         return returnPath;
     };
 
-    const traverse = function (source: number, destination: number) {
-        const queue: number[] = [];
-        const path: number[] = [];
-
+    const traverse = function (
+        source: number,
+        destination: number,
+        queue: number[] = [],
+        path: number[] = []
+    ) {
         let current = source;
 
         queue.push(current);
 
-        while (matrix.length) {
+        while (queue.length) {
             if (current === destination) {
                 return backtrack(source, destination, path);
             }
@@ -64,7 +68,7 @@ const MatrixBFS = function (matrix: number[][]): {
                 .map((element, index) => [index, element])
                 .filter((element) => element[1] > 0);
 
-            const processPath = neighbors.map((element) => {
+            neighbors.map((element) => {
                 const parent = element[0];
 
                 queue.push(parent);
@@ -107,20 +111,20 @@ const MatrixBFS = function (matrix: number[][]): {
 };
 
 const Main = function (): void {
-    const Matrix = CreateMatrix(7);
+    const graph = CreateMatrix(7);
 
-    let adjMatrix = Matrix.addEdge(Matrix.initMatrix, 0, 1, 2);
-    adjMatrix = Matrix.addEdge(adjMatrix, 0, 2, 5);
-    adjMatrix = Matrix.addEdge(adjMatrix, 1, 3, 8);
-    adjMatrix = Matrix.addEdge(adjMatrix, 2, 4, 4);
-    adjMatrix = Matrix.addEdge(adjMatrix, 3, 2, 7);
-    adjMatrix = Matrix.addEdge(adjMatrix, 4, 3, 9);
-    adjMatrix = Matrix.addEdge(adjMatrix, 4, 6, 10);
-    adjMatrix = Matrix.addEdge(adjMatrix, 5, 1, 12);
-    adjMatrix = Matrix.addEdge(adjMatrix, 6, 5, 3);
+    let adjMatrix = graph.addEdge(graph.initMatrix, 0, 1, 2);
+    adjMatrix = graph.addEdge(adjMatrix, 0, 2, 5);
+    adjMatrix = graph.addEdge(adjMatrix, 1, 3, 8);
+    adjMatrix = graph.addEdge(adjMatrix, 2, 4, 4);
+    adjMatrix = graph.addEdge(adjMatrix, 3, 2, 7);
+    adjMatrix = graph.addEdge(adjMatrix, 4, 3, 9);
+    adjMatrix = graph.addEdge(adjMatrix, 4, 6, 10);
+    adjMatrix = graph.addEdge(adjMatrix, 5, 1, 12);
+    adjMatrix = graph.addEdge(adjMatrix, 6, 5, 3);
 
     const BFS = MatrixBFS(adjMatrix);
-    const temp = BFS.createPath(0, 6);
-    console.log(temp);
+    const path = BFS.createPath(5, 6);
+    console.log(path);
 };
 Main();
