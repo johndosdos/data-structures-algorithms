@@ -112,7 +112,6 @@ const Main = function (): void {
     let adjMatrix = Matrix.addEdge(Matrix.initMatrix, 0, 1, 2);
     adjMatrix = Matrix.addEdge(adjMatrix, 0, 2, 5);
     adjMatrix = Matrix.addEdge(adjMatrix, 1, 3, 8);
-    adjMatrix = Matrix.addEdge(adjMatrix, 1, 3, 8);
     adjMatrix = Matrix.addEdge(adjMatrix, 2, 4, 4);
     adjMatrix = Matrix.addEdge(adjMatrix, 3, 2, 7);
     adjMatrix = Matrix.addEdge(adjMatrix, 4, 3, 9);
