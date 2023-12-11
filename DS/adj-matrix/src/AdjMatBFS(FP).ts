@@ -45,11 +45,12 @@ const MatrixBFS = function (matrix: number[][]): {
 
     // Backtrack from destination to source
     while (current !== source) {
-      returnPath.unshift(current);
+      returnPath.push(current);
       current = path[current];
     }
 
-    returnPath.unshift(source);
+    returnPath.push(source);
+    returnPath.reverse();
     return returnPath;
   };
 
@@ -75,7 +76,6 @@ const MatrixBFS = function (matrix: number[][]): {
         .map((element, index) => [index, element])
         .filter((element) => element[1] > 0);
 
-      // Enqueue neighbors and update the path
       neighbors.map((element) => {
         const parent = element[0];
 
