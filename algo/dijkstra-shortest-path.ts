@@ -19,7 +19,7 @@ function createList(numberOfNodes: number) {
 
 function dijkstra(graphList: Map<number, Edge[]>) {
   const distance: number[] = new Array(graphList.size).fill(Infinity);
-  const prev: number[] = [];
+  const prev: number[] = new Array(graphList.size).fill(-1);
 
   function backtrack(destination: number, source: number): number[] {
     const returnPath: number[] = [];
@@ -43,6 +43,10 @@ function dijkstra(graphList: Map<number, Edge[]>) {
     let prevNeighborWeight = 0;
 
     while (current !== destination) {
+      if (current === undefined) {
+        throw new Error("Destination is not reachable");
+      }
+
       const neighbors = graphList.get(current);
 
       if (neighbors) {
@@ -51,16 +55,12 @@ function dijkstra(graphList: Map<number, Edge[]>) {
             continue;
           }
 
-          // if (!prev.includes(current)) {
-          //   visited.add(current);
-          // }
-
           if (distance[current] + neighbor.weight < distance[neighbor.to]) {
             distance[neighbor.to] = distance[current] + neighbor.weight;
             prev[neighbor.to] = current;
           }
 
-          if (neighbor.weight < prevNeighborWeight) {
+          if (neighbor.weight <= prevNeighborWeight) {
             current = neighbor.to;
           }
 
